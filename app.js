@@ -73,51 +73,6 @@ const FILMS = [
     still: '',
     videoUrl: '#',
   },
-  {
-    id: 'echo',
-    title: '回声',
-    titleEn: 'Echo',
-    year: '2022',
-    duration: '8′',
-    role: '导演 / 剪辑',
-    genres: ['实验'],
-    logline: '把一条哭过的街道的声音重新放回街道。',
-    synopsis: '我们收集了拆迁前最后一周的街道声景：叫卖、脚步声、雨落在铁皮棚上的声音。然后，把录音循环播放给正在离开的人听。一部关于「声音能否成为纪念」的实验影像。',
-    cast: [],
-    awards: [],
-    festivals: ['杭州国际实验影像周'],
-    poster: '', still: '', videoUrl: '#',
-  },
-  {
-    id: 'coastline',
-    title: '海岸线',
-    titleEn: 'Coastline',
-    year: '2021',
-    duration: '10′',
-    role: '导演 / 编剧',
-    genres: ['纪录'],
-    logline: '在退潮的滩涂上，两人捡拾彼此的过去。',
-    synopsis: '两位多年未见的老友约定每年冬天在故乡滩涂见一面。今年，潮水比往年退得更远，他们看见滩涂下埋着的小镇旧地基。一部安静的、关于地理记忆的纪录短片。',
-    cast: ['阿茶', '阿峰'],
-    awards: ['山一国际女性影展 · 评委会奖'],
-    festivals: ['山一国际女性电影展', '杭州青年影像计划'],
-    poster: '', still: '', videoUrl: '#',
-  },
-  {
-    id: 'blue-room',
-    title: '蓝房间',
-    titleEn: 'The Blue Room',
-    year: '2020',
-    duration: '7′',
-    role: '导演 / 摄影',
-    genres: ['剧情', '实验'],
-    logline: '一间不断缩小面积的房间与一个练习消失的人。',
-    synopsis: '一个行为艺术者在展览现场搭起一间每天缩小 5% 的蓝房间，他在里面练习搬走自己。当墙最后贴上他的肩膀，观众才恍然大悟。',
-    cast: ['孟可'],
-    awards: [],
-    festivals: ['平遥国际影展 · VOID 单元'],
-    poster: '', still: '', videoUrl: '#',
-  },
 ];
 
 /* ============================================================
@@ -179,8 +134,8 @@ function renderFeatured() {
    渲染：电影卡（海报 + 元数据）
    ============================================================ */
 function filmCardHTML(f, i) {
-  // 布局：第 1 张 lead 宽卡（span 8），第 2 张窄卡（span 4），其余均分（span 6）
-  const span = i === 0 ? 'film-card--lead' : (i === 1 ? 'film-card--narrow' : 'film-card--wide');
+  // 布局：横版海报卡均等宽并排（各 span 6）
+  const span = 'film-card--wide';
   const img = f.poster ? resolve(f.poster) : genPoster(f);
   const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
   const award = (f.awards && f.awards.length)
@@ -213,9 +168,8 @@ function filmCardHTML(f, i) {
 
 function renderFilms() {
   const grid = $('#work-grid');
-  // 主打作已在 hero 右侧展示，网格只渲染其余作品（避免海报重复）
-  const films = FILMS.filter(f => !f.featured);
-  grid.innerHTML = films.map((f, i) => filmCardHTML(f, i)).join('');
+  // 两部短片海报全部展示（hero 主打卡另展示主打一部）
+  grid.innerHTML = FILMS.map((f, i) => filmCardHTML(f, i)).join('');
 }
 
 /* ============================================================
