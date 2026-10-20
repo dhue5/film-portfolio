@@ -405,7 +405,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .about-grid { gap: clamp(.75rem, 2vw, 1.5rem); }
 .about-media { grid-column: span 5; grid-row: span 2; border-radius: var(--radius-lg); padding:1rem; transform-style: preserve-3d; }
 .about-media__frame { border-radius: var(--radius-sm); overflow:hidden; }
-.about-media__img { width:100%; height:100%; object-fit:cover; aspect-ratio:16/10; transition: transform .6s var(--ease-out); }
+.about-media__img { width:100%; height:100%; object-fit:cover; aspect-ratio:1517/858; transition: transform .6s var(--ease-out); }
 .card:hover .about-media__img { transform: scale(1.04); }
 .about-media__caption { margin-top:.8rem; color: var(--ink-dim); font-size:.82rem; text-align:center; letter-spacing:.06em; }
 .about-body { grid-column: span 7; grid-row: span 2; border-radius: var(--radius-lg); padding: clamp(1.6rem, 3vw, 2.5rem); display:flex; flex-direction:column; gap:1rem; justify-content:center; }
