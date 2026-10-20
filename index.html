@@ -48,6 +48,24 @@
   </header>
 
   <main id="main">
+    <!-- 导演介绍：标题 + 导演肖像（置于页面最顶部） -->
+    <section id="about" class="section about" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title" class="section-title">导演介绍</h2>
+        <p class="section-desc">想了解一个人，去看 TA 的片子。</p>
+      </div>
+      <div class="about-media-wrap" data-reveal>
+        <div class="card glass about-media" data-tilt>
+          <div class="about-media__frame">
+            <img src="./assets/img/film-01.png" alt="林深——导演个人视觉肖像" width="1517" height="858"
+                 loading="lazy" decoding="async" class="about-media__img">
+          </div>
+          <span class="sheen" aria-hidden="true"></span>
+          <span class="glare" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+
     <!-- HERO：Bento 上行（自我介绍 + 主打短片） -->
     <section id="hero" class="hero section" aria-labelledby="hero-title">
       <div class="bento">
@@ -72,24 +90,6 @@
         <p class="section-desc">海报即入口——悬停倾斜、点击丝滑展开完整片档。</p>
       </div>
       <div class="bento work-grid" id="work-grid"><!-- app.js 渲染海报卡 --></div>
-    </section>
-
-    <!-- 导演介绍：标题 + 导演肖像 -->
-    <section id="about" class="section about" aria-labelledby="about-title">
-      <div class="section-head">
-        <h2 id="about-title" class="section-title">导演介绍</h2>
-        <p class="section-desc">想了解一个人，去看 TA 的片子。</p>
-      </div>
-      <div class="about-media-wrap" data-reveal>
-        <div class="card glass about-media" data-tilt>
-          <div class="about-media__frame">
-            <img src="./assets/img/film-01.png" alt="林深——导演个人视觉肖像" width="1517" height="858"
-                 loading="lazy" decoding="async" class="about-media__img">
-          </div>
-          <span class="sheen" aria-hidden="true"></span>
-          <span class="glare" aria-hidden="true"></span>
-        </div>
-      </div>
     </section>
 
     <!-- 联系 -->
