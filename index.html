@@ -74,20 +74,21 @@
       <div class="bento work-grid" id="work-grid"><!-- app.js 渲染海报卡 --></div>
     </section>
 
-    <!-- 导演介绍：自我介绍（film-01.png）+ 履历 -->
+    <!-- 导演介绍：标题 + 导演肖像 -->
     <section id="about" class="section about" aria-labelledby="about-title">
       <div class="section-head">
-        <p class="eyebrow">导演介绍 · Director</p>
+        <h2 id="about-title" class="section-title">导演介绍</h2>
+        <p class="section-desc">想了解一个人，去看 TA 的片子。</p>
       </div>
-      <div class="bento about-grid">
-        <div class="card glass about-media" data-tilt data-reveal>
+      <div class="about-media-wrap" data-reveal>
+        <div class="card glass about-media" data-tilt>
           <div class="about-media__frame">
             <img src="./assets/img/film-01.png" alt="林深——导演个人视觉肖像" width="1517" height="858"
                  loading="lazy" decoding="async" class="about-media__img">
           </div>
-          <p class="about-media__caption">想了解一个人，去看 TA 的片子。</p>
+          <span class="sheen" aria-hidden="true"></span>
+          <span class="glare" aria-hidden="true"></span>
         </div>
-        <div class="card glass about-body" id="about-slot" data-reveal><!-- app.js 填充介绍文本 --></div>
       </div>
     </section>
 

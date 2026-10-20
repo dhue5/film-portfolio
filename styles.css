@@ -401,22 +401,12 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   background: var(--gold); box-shadow: 0 0 10px rgba(255,201,77,.8);
 }
 
-/* ---------- 关于：导演介绍 ---------- */
-.about-grid { gap: clamp(.75rem, 2vw, 1.5rem); }
-.about-media { grid-column: span 5; grid-row: span 2; border-radius: var(--radius-lg); padding:1rem; transform-style: preserve-3d; }
+/* ---------- 关于：导演介绍（标题 + 导演肖像） ---------- */
+.about-media-wrap { max-width: 64rem; margin-inline:auto; }
+.about-media { border-radius: var(--radius-lg); padding:1rem; transform-style: preserve-3d; }
 .about-media__frame { border-radius: var(--radius-sm); overflow:hidden; }
-.about-media__img { width:100%; height:100%; object-fit:cover; aspect-ratio:1517/858; transition: transform .6s var(--ease-out); }
+.about-media__img { display:block; width:100%; height:auto; aspect-ratio:1517/858; object-fit:cover; transition: transform .6s var(--ease-out); }
 .card:hover .about-media__img { transform: scale(1.04); }
-.about-media__caption { margin-top:.8rem; color: var(--ink-dim); font-size:.82rem; text-align:center; letter-spacing:.06em; }
-.about-body { grid-column: span 7; grid-row: span 2; border-radius: var(--radius-lg); padding: clamp(1.6rem, 3vw, 2.5rem); display:flex; flex-direction:column; gap:1rem; justify-content:center; }
-.about-body__bio { color: var(--ink-dim); line-height:1.75; font-size: .97rem; }
-.about-body__bio strong { color: var(--ink); font-weight: 650; }
-.about-body__chips { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
-.about-body__tools { display:flex; flex-wrap:wrap; gap:.4rem; margin-top:.25rem; }
-.about-body__tools span {
-  font-size:.72rem; padding:.25rem .6rem; border-radius:999px;
-  border:1px solid rgba(0,217,255,.35); color: var(--aur-cyan); background: rgba(0,217,255,.08);
-}
 
 /* ---------- 联系 ---------- */
 .contact-inner { max-width: 72rem; margin-inline:auto; text-align:center; }
@@ -538,7 +528,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-width: 68rem) {
   .hero-card { grid-column: span 12; }
   .featured { grid-column: span 12; grid-row: span 1; }
-  .about-media, .about-body { grid-column: span 12; }
   .film-card--lead,
   .film-card--narrow,
   .film-card--wide,

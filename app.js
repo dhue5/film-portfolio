@@ -219,20 +219,8 @@ function renderFilms() {
 }
 
 /* ============================================================
-   渲染：导演介绍（Portrait + 履历 + 创作理念）
+   （导演介绍改为静态标题 + 图片，见 index.html 关于区）
    ============================================================ */
-function renderAbout() {
-  const slot = $('#about-slot');
-  const tools = ['Sony FX3', 'RED Komodo', 'ARRI 胶片', 'Davinci', 'Premiere', 'TouchDesigner']
-    .map(t => `<span>${t}</span>`).join('');
-  slot.innerHTML = `
-    <h2 id="about-title" class="section-title">导演介绍 <span class="section-title-en">DIRECTOR · ABOUT</span></h2>
-    <p class="about-body__bio">${SITE.bio[0]}</p>
-    <p class="about-body__bio">${SITE.bio[1]}</p>
-    <div class="about-body__chips">${SITE.tags.map(t => `<span class="chip">${esc(t)}</span>`).join('')}</div>
-    <div class="about-body__tools">${tools}</div>
-    <span class="sheen" aria-hidden="true"></span>`;
-}
 
 function renderContact() {
   const slot = $('#contact-slot');
@@ -435,7 +423,6 @@ function init() {
 
   renderFeatured();
   renderFilms();
-  renderAbout();
   renderContact();
 
   // 初始化所有卡片为可倾斜，并启动滚动渐显
