@@ -1,0 +1,451 @@
+/* ============================================================
+   FILM PORTFOLIO · app.js
+   数据驱动渲染 · tvOS 视差倾斜 · 滚动叙事图表 · 丝滑弹窗
+   纯原生 JS，无任何依赖，GitHub Pages 可直接部署
+   ============================================================ */
+'use strict';
+
+/* ---------- 环境探测 ---------- */
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const COARSE = window.matchMedia('(pointer: coarse)').matches;
+const DIALOG_NATIVE = typeof HTMLDialogElement !== 'undefined';
+
+/* GitHub Pages 项目页运行于子路径（/film-portfolio/）：资源一律相对解析 */
+const BASE = new URL('./', document.baseURI);
+const resolve = (p) => BASE.href.replace(/\/$/, '') + '/' + p.replace(/^\.?\//, '');
+
+/* ---------- 站点信息（可编辑） ---------- */
+const SITE = {
+  name: '林深',
+  nameEn: 'LIN SHEN',
+  role: '导演 / 编剧 / 剪辑',
+  tagline: '用镜头捕捉光与时间，讲述属于我们时代的故事。',
+  bio: [
+    `你好，我是<strong>林深</strong>，一名专注短片的独立电影人。2016 年起投身独立影像创作，作品先后入围国内外十余个短片电影节，以<strong>「时间 × 情绪」</strong>为母题，在有限片长里完成一次完整的情绪转弯。`,
+    `我偏爱把「消失」拍成可见的东西——消失的方言、消失的街区、消逝前最后一通无线电。每部短片都是一次瞄准：对准一个念头、一个人、一段从未被说出的日常。海报即入口，欢迎进入我的片库。`,
+  ],
+  tags: ['剧情短片', '纪录片', '科幻实验', '胶片刻录', '跨媒介影像'],
+  // 个人视觉（自我介绍图 = film-01.png）
+  introAlt: '林深——个人视觉肖像',
+  email: 'lin.shen@example.com',
+  emailLabel: 'lin.shen@example.com',
+  socials: [
+    { label: 'Vimeo',  icon: '◉', url: '#' },
+    { label: 'Instagram', icon: '◎', url: '#' },
+    { label: '哔哩哔哩', icon: '▣', url: '#' },
+  ],
+};
+
+/* ---------- 电影库（可编辑；poster 留空则自动生成渐变海报） ---------- */
+const FILMS = [
+  {
+    id: 'aurora',
+    title: '极光之下',
+    titleEn: 'Under the Aurora',
+    year: '2024',
+    duration: '12′',
+    role: '导演 / 编剧',
+    genres: ['剧情', '科幻'],
+    logline: '南纬七十度的极夜里，一段跨语言的电波之恋。',
+    synopsis: '在南极科考站的最后一夜，气象员收到一段来自四十年前的无线电波，内容竟是与当下同步的对话。当极光在天空展开，两个时代的人在频道里相遇——关于距离、时间，与从未寄出的告白。',
+    cast: ['周屿', '艾拉', '陈默'],
+    awards: ['克莱蒙费朗短片节 · 评审团特别奖'],
+    festivals: ['克莱蒙费朗国际短片节', '上海国际电影节短片单元'],
+    poster: './assets/img/film-02.png',
+    still: '',  // 留空：hover 复用自身海报
+    videoUrl: '#',
+    featured: true,
+  },
+  {
+    id: 'nightfall',
+    title: '入夜之前',
+    titleEn: 'Before Nightfall',
+    year: '2023',
+    duration: '15′',
+    role: '导演 / 摄影',
+    genres: ['剧情', '纪录'],
+    logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
+    synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
+    cast: ['老周', '小雨'],
+    awards: ['FIRST 青年影展 · 最佳摄影提名'],
+    festivals: ['FIRST 青年电影展', '北京国际短片联展'],
+    poster: './assets/img/film-03.png',
+    still: '',
+    videoUrl: '#',
+  },
+  {
+    id: 'echo',
+    title: '回声',
+    titleEn: 'Echo',
+    year: '2022',
+    duration: '8′',
+    role: '导演 / 剪辑',
+    genres: ['实验'],
+    logline: '把一条哭过的街道的声音重新放回街道。',
+    synopsis: '我们收集了拆迁前最后一周的街道声景：叫卖、脚步声、雨落在铁皮棚上的声音。然后，把录音循环播放给正在离开的人听。一部关于「声音能否成为纪念」的实验影像。',
+    cast: [],
+    awards: [],
+    festivals: ['杭州国际实验影像周'],
+    poster: '', still: '', videoUrl: '#',
+  },
+  {
+    id: 'coastline',
+    title: '海岸线',
+    titleEn: 'Coastline',
+    year: '2021',
+    duration: '10′',
+    role: '导演 / 编剧',
+    genres: ['纪录'],
+    logline: '在退潮的滩涂上，两人捡拾彼此的过去。',
+    synopsis: '两位多年未见的老友约定每年冬天在故乡滩涂见一面。今年，潮水比往年退得更远，他们看见滩涂下埋着的小镇旧地基。一部安静的、关于地理记忆的纪录短片。',
+    cast: ['阿茶', '阿峰'],
+    awards: ['山一国际女性影展 · 评委会奖'],
+    festivals: ['山一国际女性电影展', '杭州青年影像计划'],
+    poster: '', still: '', videoUrl: '#',
+  },
+  {
+    id: 'blue-room',
+    title: '蓝房间',
+    titleEn: 'The Blue Room',
+    year: '2020',
+    duration: '7′',
+    role: '导演 / 摄影',
+    genres: ['剧情', '实验'],
+    logline: '一间不断缩小面积的房间与一个练习消失的人。',
+    synopsis: '一个行为艺术者在展览现场搭起一间每天缩小 5% 的蓝房间，他在里面练习搬走自己。当墙最后贴上他的肩膀，观众才恍然大悟。',
+    cast: ['孟可'],
+    awards: [],
+    festivals: ['平遥国际影展 · VOID 单元'],
+    poster: '', still: '', videoUrl: '#',
+  },
+];
+
+/* ============================================================
+   工具
+   ============================================================ */
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+/* 自动生成渐变海报（poster 留空时）——深黑底 + 极光渐变 + 片名 */
+function genPoster(f, w = 600, h = 900) {
+  const hue = [210, 168, 258, 330][FILMS.indexOf(f) % 4];
+  const glow = `hsl(${hue} 95% 60%)`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <defs>
+      <radialGradient id="g" cx="35%" cy="20%" r="90%">
+        <stop offset="0%" stop-color="${glow}" stop-opacity=".55"/>
+        <stop offset="55%" stop-color="hsl(${hue} 60% 22%)"/>
+        <stop offset="100%" stop-color="#04060a"/>
+      </radialGradient>
+      <filter id="b"><feGaussianBlur stdDeviation="2"/></filter>
+    </defs>
+    <rect width="${w}" height="${h}" fill="url(#g)"/>
+    <rect width="${w}" height="${h}" y="${h - 3}" fill="hsl(${hue} 95% 65% / .7)"/>
+    <text x="34" y="${h - 60}" font-family="system-ui,sans-serif" font-size="46" font-weight="700"
+          letter-spacing="6" fill="#eef4ff">${esc(f.title)}</text>
+    <text x="36" y="${h - 26}" font-family="ui-monospace,monospace" font-size="16" letter-spacing="3"
+          fill="rgba(238,244,255,.55)">${esc(f.titleEn.toUpperCase())}</text>
+  </svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+/* ============================================================
+   渲染：主打短片（hero 右侧）
+   ============================================================ */
+function renderFeatured() {
+  const f = FILMS.find(x => x.featured) || FILMS[0];
+  const slot = $('#featured-slot');
+  const img = f.poster ? resolve(f.poster) : genPoster(f);
+  const badges = (f.awards && f.awards.length)
+    ? `<span class="featured__badge">★ ${esc(f.awards[0].split('·')[0].trim())}</span>` : '';
+  const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
+  slot.innerHTML = `
+    <div class="featured__media">
+      <img src="${img}" alt="主打短片《${esc(f.title)}》海报" loading="eager" decoding="async">
+      <div class="featured__scrim">
+        <span class="featured__title">${esc(f.title)}</span>
+        <span class="featured__meta">${f.year} · ${esc(f.duration)} · ${esc(f.role)}</span>
+        <span class="featured__chips">${chips}</span>
+      </div>
+    </div>
+    ${badges}
+    <span class="sheen" aria-hidden="true"></span>
+    <span class="glare" aria-hidden="true"></span>`;
+}
+
+/* ============================================================
+   渲染：电影卡（海报 + 元数据）
+   ============================================================ */
+function filmCardHTML(f, i) {
+  // 布局：第 1 张 lead 宽卡（span 8），第 2 张窄卡（span 4），其余均分（span 6）
+  const span = i === 0 ? 'film-card--lead' : (i === 1 ? 'film-card--narrow' : 'film-card--wide');
+  const img = f.poster ? resolve(f.poster) : genPoster(f);
+  const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
+  const award = (f.awards && f.awards.length)
+    ? `<span class="film-card__award">${esc(f.awards[0].split('·')[0].trim())}</span>` : '';
+  const still = f.still
+    ? `<img class="film-card__still" src="${resolve(f.still)}" alt="" loading="lazy" decoding="async" aria-hidden="true">`
+    : '';
+  return `
+    <button class="card glass film-card ${span}" data-tilt data-reveal data-film="${f.id}"
+            aria-label="打开《${esc(f.title)}》详情" style="transition-delay:${Math.min(i * 70, 280)}ms">
+      <span class="film-card__media">
+        <img class="film-card__poster" src="${img}" alt="《${esc(f.title)}》海报（${f.year}）"
+             loading="lazy" decoding="async">
+        ${still}
+      </span>
+      <span class="film-card__body">
+        <span class="film-card__row">
+          <span class="film-card__title">${esc(f.title)}</span>
+          <span class="film-card__year">${f.year}</span>
+        </span>
+        <span class="film-card__meta">${esc(f.duration)} · ${esc(f.role)}</span>
+        <span class="film-card__chips">${chips}</span>
+        <span class="film-card__logline">${esc(f.logline)}</span>
+        ${award}
+      </span>
+      <span class="sheen" aria-hidden="true"></span>
+      <span class="glare" aria-hidden="true"></span>
+    </button>`;
+}
+
+function renderFilms() {
+  const grid = $('#work-grid');
+  // 主打作已在 hero 右侧展示，网格只渲染其余作品（避免海报重复）
+  const films = FILMS.filter(f => !f.featured);
+  grid.innerHTML = films.map((f, i) => filmCardHTML(f, i)).join('');
+}
+
+/* ============================================================
+   渲染：导演介绍（Portrait + 履历 + 创作理念）
+   ============================================================ */
+function renderAbout() {
+  const slot = $('#about-slot');
+  const tools = ['Sony FX3', 'RED Komodo', 'ARRI 胶片', 'Davinci', 'Premiere', 'TouchDesigner']
+    .map(t => `<span>${t}</span>`).join('');
+  slot.innerHTML = `
+    <h2 id="about-title" class="section-title">导演介绍 <span class="section-title-en">DIRECTOR · ABOUT</span></h2>
+    <p class="about-body__bio">${SITE.bio[0]}</p>
+    <p class="about-body__bio">${SITE.bio[1]}</p>
+    <div class="about-body__chips">${SITE.tags.map(t => `<span class="chip">${esc(t)}</span>`).join('')}</div>
+    <div class="about-body__tools">${tools}</div>
+    <span class="sheen" aria-hidden="true"></span>`;
+}
+
+function renderContact() {
+  const slot = $('#contact-slot');
+  const socials = SITE.socials.map(s =>
+    `<a class="social-btn" href="${esc(s.url)}" rel="noopener" aria-label="${esc(s.label)}">
+       <span aria-hidden="true">${s.icon}</span> ${esc(s.label)}
+     </a>`).join('');
+  slot.innerHTML = `
+    <a class="social-btn social-btn--primary" href="mailto:${esc(SITE.email)}" aria-label="给我发邮件">
+      ✉ ${esc(SITE.emailLabel)}
+    </a>
+    ${socials}`;
+}
+
+/* ============================================================
+   tvOS 视差倾斜（rAF + lerp，coarse 指针 / 减动效时禁用）
+   ============================================================ */
+const Tilt = (() => {
+  let raf = null;
+  const cards = [];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function tick() {
+    raf = requestAnimationFrame(tick);
+    for (const c of cards) {
+      if (!c.behind || c.hidden) continue;
+      // 阻尼接近目标 → 平滑停留
+      c.cur.rx = lerp(c.cur.rx, c.target.rx, 0.14);
+      c.cur.ry = lerp(c.cur.ry, c.target.ry, 0.14);
+      c.cur.s  = lerp(c.cur.s,  c.target.s,  0.14);
+      const done = Math.abs(c.cur.rx - c.target.rx) < 0.02
+        && Math.abs(c.cur.ry - c.target.ry) < 0.02
+        && Math.abs(c.cur.s - c.target.s) < 0.005;
+      c.el.style.transform =
+        `perspective(1000px) rotateX(${c.cur.rx.toFixed(2)}deg) rotateY(${c.cur.ry.toFixed(2)}deg) scale(${c.cur.s.toFixed(4)})`;
+      if (done && c.idle) {
+        c.behind = false;
+        c.el.style.transform = '';
+      }
+    }
+  }
+
+  function bind(card) {
+    if (COARSE || REDUCED || !card) return;
+    const rec = { el: card, cur: { rx: 0, ry: 0, s: 1 }, target: { rx: 0, ry: 0, s: 1 }, behind: true, idle: true };
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width  - 0.5;
+      const py = (e.clientY - r.top)  / r.height - 0.5;
+      rec.target.ry = px * 10;   // 水平甩头 ±5°
+      rec.target.rx = -py * 10;  // 垂直俯仰 ±5°
+      rec.target.s = 1.02;
+      rec.behind = true; rec.idle = false;
+      card.style.setProperty('--mx', (px + 0.5) * 100 + '%');
+      card.style.setProperty('--my', (py + 0.5) * 100 + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      rec.target.rx = 0; rec.target.ry = 0; rec.target.s = 1;
+      rec.idle = true;
+    });
+    cards.push(rec);
+    if (!raf && !REDUCED) raf = requestAnimationFrame(tick);
+  }
+
+  function init() { $$('[data-tilt]').forEach(bind); }
+  return { init, bind };
+})();
+
+/* ============================================================
+   滚动渐显：IO 一次性触发 → 元素淡入上移（once）
+   ============================================================ */
+const Reveal = (() => {
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      const el = entry.target;
+      io.unobserve(el);
+      el.classList.add('is-revealed');
+    }
+  }, { threshold: 0.3, rootMargin: '0px 0px -8% 0px' });
+
+  function scan() {
+    $$('[data-reveal]').forEach(el => io.observe(el));
+  }
+  return { scan, io };
+})();
+
+/* ============================================================
+   丝滑展开：海报卡 → <dialog>（FLIP 缩放过渡）
+   ============================================================ */
+const Dialog = (() => {
+  const dlg = $('#film-dialog');
+  let openCard = null;
+  let closing = false;
+
+  function open(id) {
+    const f = FILMS.find(x => x.id === id);
+    if (!f || DIALOG_NATIVE === false) return;
+    openCard = $(`[data-film="${id}"]`);
+    dlg.innerHTML = buildInner(f);
+    if (!dlg.open) dlg.showModal();
+
+    // FLIP：以触发卡为源点缩放展开
+    const r = openCard ? openCard.getBoundingClientRect() : null;
+    const vw = innerWidth, vh = innerHeight;
+    const or = openCard.getBoundingClientRect();
+    const scaleX = r.width / Math.min(dlg.offsetWidth, vw - 48);
+    const scaleY = r.height / Math.min(dlg.offsetHeight, vh - 48);
+    const scale = Math.max(scaleX, scaleY);
+    setTimeout(() => {
+      if (!REDUCED && !closing) {
+        dlg.style.transform = `scale(${Math.min(scale, 1.6)}) translateY(${(or.top - (vh - dlg.offsetHeight) / 2) * .4}px)`;
+        dlg.animate([{ transform: dlg.style.transform, opacity: 0 }, { transform: 'none', opacity: 1 }], {
+          duration: 300, easing: 'cubic-bezier(.32,.72,0,1)'
+        });
+        dlg.style.transform = 'none';
+      }
+      const t = $('#dialog-title');
+      if (t) t.focus({ preventScroll: true });
+    }, 20);
+  }
+
+  function close() {
+    if (!dlg.open || closing) return;
+    closing = true;
+    const done = () => {
+      dlg.close();
+      closing = false;
+      const c = openCard;
+      openCard = null;
+      if (c && c.focus) c.focus({ preventScroll: true });
+    };
+    if (REDUCED) return done();
+    dlg.animate([{ transform: 'none', opacity: 1 }, { transform: 'scale(.92) translateY(20px)', opacity: 0 }], {
+      duration: 220, easing: 'ease'
+    }).onfinish = done;
+  }
+
+  function buildInner(f) {
+    const poster = f.poster ? resolve(f.poster) : genPoster(f);
+    const meta = `${f.year} · ${esc(f.duration)} · ${esc(f.role)}`;
+    const cast = f.cast.length ? `<div class="dialog-cast">${f.cast.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : '';
+    const awards = (f.awards || []).map(a => `<li class="dialog-award">★ ${esc(a)}</li>`).join('');
+    const festivals = (f.festivals || []).map(a => `<li>${esc(a)}</li>`).join('');
+    const watch = (f.videoUrl && f.videoUrl !== '#')
+      ? `<a class="dialog-watch" href="${esc(f.videoUrl)}" target="_blank" rel="noopener">▶ 在线观看</a>`
+      : `<button class="dialog-watch" disabled style="opacity:.35;cursor:not-allowed;">▶ 预告片筹备中</button>`;
+    return `
+      <button class="dialog-close" aria-label="关闭详情">✕</button>
+      <div class="dialog-grid">
+        <div class="dialog-poster">
+          <img src="${poster}" alt="《${esc(f.title)}》海报" loading="eager" decoding="async">
+          <div class="dialog-poster__scrim"></div>
+        </div>
+        <div class="dialog-body">
+          <p class="dialog-eyebrow">${esc(f.titleEn.toUpperCase())} · SHORT FILM</p>
+          <h3 class="dialog-title" id="dialog-title" tabindex="-1">${esc(f.title)}
+            <span class="dialog-title--en">${esc(f.titleEn)}</span>
+          </h3>
+          <p class="dialog-meta">${meta}</p>
+          <div class="film-card__chips">${f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('')}</div>
+          <p class="dialog-synopsis">${esc(f.synopsis)}</p>
+          ${cast}
+          <div class="dialog-facts">
+            <div class="fact-row"><span class="fact-label">影展</span>
+              <ul class="fact-value">${festivals || '<li>即将公布</li>'}</ul></div>
+            <div class="fact-row"><span class="fact-label">获奖</span>
+              <ul class="fact-value">${awards || '<li>—</li>'}</ul></div>
+          </div>
+          ${watch}
+        </div>
+      </div>`;
+  }
+
+  function init() {
+    if (DIALOG_NATIVE === false) return;
+    // 事件委托：所有电影卡点击打开
+    $('#work-grid').addEventListener('click', (e) => {
+      const card = e.target.closest('[data-film]');
+      if (card) open(card.dataset.film);
+    });
+    dlg.addEventListener('click', (e) => {
+      if (e.target.closest('.dialog-close')) close();
+    });
+    // 点击 backdrop 关闭
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) close();
+    });
+  }
+
+  return { init, open, close };
+})();
+
+/* ============================================================
+   初始化
+   ============================================================ */
+function init() {
+  $('#year').textContent = new Date().getFullYear();
+
+  renderFeatured();
+  renderFilms();
+  renderAbout();
+  renderContact();
+
+  // 初始化所有卡片为可倾斜，并启动滚动渐显
+  Tilt.init();
+  Reveal.scan();
+  Dialog.init();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

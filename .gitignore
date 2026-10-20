@@ -1,0 +1,14 @@
+# reference images (local only)
+_ref/
+
+# local preview logs
+serve*.log
+
+# OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# editor
+.vscode/
+.idea/

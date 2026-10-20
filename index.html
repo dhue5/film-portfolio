@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>林深 LIN SHEN · 独立电影人 · 个人短片作品集</title>
+  <meta name="description" content="独立电影人林深（LIN SHEN）的个人短片作品集——以空间计算美学呈现的互动影展，含剧情、纪录片、科幻与实验影像。">
+  <meta name="theme-color" content="#05060A">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="林深 LIN SHEN · 独立电影人">
+  <meta property="og:description" content="用镜头捕捉光与时间——独立电影人的个人短片作品集。">
+  <meta property="og:image" content="./assets/img/film-01.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305060a'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%2300D9FF' stroke-width='2'/%3E%3Ccircle cx='21' cy='10' r='2' fill='%2300FFB3'/%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Person",
+    "name": "林深 LIN SHEN",
+    "jobTitle": "Independent Filmmaker",
+    "description": "独立电影人，作品涵盖剧情、纪录、科幻与实验短片。",
+    "url": "https://github.com/dhue5/film-portfolio"
+  }
+  </script>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- 极光舞台（纯 CSS，深黑底 + 光流） -->
+  <div class="aurora" aria-hidden="true">
+    <div class="aurora__layer aurora__blob"></div>
+    <div class="aurora__layer aurora__band"></div>
+    <div class="aurora__grain"></div>
+  </div>
+
+  <!-- 粘性玻璃导航 -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a class="nav__monogram" href="#top" aria-label="回到顶部">◆</a>
+      <nav class="nav__links" aria-label="主导航">
+        <a href="#work">作品</a>
+        <a href="#about">关于</a>
+        <a href="#contact">联系</a>
+      </nav>
+      <div class="nav__status"><span class="nav__dot" aria-hidden="true"></span> 新片后期中</div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO：Bento 上行（自我介绍 + 主打短片） -->
+    <section id="hero" class="hero section" aria-labelledby="hero-title">
+      <div class="bento">
+        <div class="card glass hero-card" data-tilt aria-labelledby="hero-title">
+          <p class="eyebrow">独立电影人 · Independent Filmmaker</p>
+          <h1 id="hero-title" class="hero__name reveal-on-load">林深<span class="hero__name-en"> LIN SHEN</span></h1>
+          <p class="hero__role">导演 / 编剧 / 剪辑 · Director · Writer · Editor</p>
+          <p class="hero__tagline">用镜头捕捉光与时间，讲述属于我们时代的故事。</p>
+          <a class="cta" href="#work">查看作品 <span class="cta__arrow" aria-hidden="true">→</span></a>
+          <span class="glass sheen" aria-hidden="true"></span>
+        </div>
+
+        <div class="card glass featured" data-tilt id="featured-slot"><!-- app.js 渲染主打短片 --></div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- 作品：Bento 中部（海报卡 + 滚动渐显） -->
+    <section id="work" class="section work" aria-labelledby="work-title">
+      <div class="section-head">
+        <h2 id="work-title" class="section-title">短片项目 <span class="section-title-en">SHORT FILMS</span></h2>
+        <p class="section-desc">海报即入口——悬停倾斜、点击丝滑展开完整片档。</p>
+      </div>
+      <div class="bento work-grid" id="work-grid"><!-- app.js 渲染海报卡 --></div>
+    </section>
+
+    <!-- 导演介绍：自我介绍（film-01.png）+ 履历 -->
+    <section id="about" class="section about" aria-labelledby="about-title">
+      <div class="section-head">
+        <p class="eyebrow">导演介绍 · Director</p>
+      </div>
+      <div class="bento about-grid">
+        <div class="card glass about-media" data-tilt data-reveal>
+          <div class="about-media__frame">
+            <img src="./assets/img/film-01.png" alt="林深——导演个人视觉肖像" width="720" height="407"
+                 loading="lazy" decoding="async" class="about-media__img">
+          </div>
+          <p class="about-media__caption">想了解一个人，去看 TA 的片子。</p>
+        </div>
+        <div class="card glass about-body" id="about-slot" data-reveal><!-- app.js 填充介绍文本 --></div>
+      </div>
+    </section>
+
+    <!-- 联系 -->
+    <section id="contact" class="section contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <p class="eyebrow">合作 · Contact</p>
+        <h2 id="contact-title" class="section-title">一起讲个故事？<span class="section-title-en">LET'S MAKE A FILM</span></h2>
+        <div class="contact-actions" id="contact-slot"><!-- app.js 渲染邮箱/社交 --></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year">2026</span> 林深 · 独立电影人</p>
+    <p class="footer__tech">index.html + styles.css + app.js · 纯静态，离线可用</p>
+    <a class="footer__top" href="#top" aria-label="回到顶部">↑</a>
+  </footer>
+
+  <!-- 电影详情模态 -->
+  <dialog id="film-dialog" class="film-dialog" aria-labelledby="dialog-title">
+    <div class="film-dialog__inner" id="dialog-inner"><!-- app.js 渲染详情 --></div>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
