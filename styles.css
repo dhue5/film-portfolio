@@ -371,14 +371,13 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .film-card__media {
   border-radius: var(--radius-sm); overflow: hidden;
-  position: relative;  /* 尺寸由宽卡 aspect-ratio 决定 */
+  position: relative;
 }
 .film-card--wide .film-card__media {
-  aspect-ratio: 1912 / 1073;  /* 横版海报（16:9）原比例，不裁切 */
-  flex: none;
+  flex: none;  /* 高度由海报图自身比例撑开，不强制裁切 */
 }
 .film-card__poster {
-  width: 100%; height: 100%; object-fit: cover;
+  display: block; width: 100%; height: auto;  /* 按每张海报原始比例自适应 */
   transition: transform .55s var(--ease-out), filter .3s ease;
   filter: saturate(.92) contrast(1.02);
 }
