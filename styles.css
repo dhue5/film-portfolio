@@ -311,9 +311,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .film-card__still { position:absolute; inset:0; opacity:0; transition: opacity .35s ease; }
 .card:hover .film-card__still { opacity:1; }
 .film-card__body { padding: .9rem .2rem .2rem; }
-.film-card__row { display:flex; align-items:baseline; justify-content:space-between; gap:.6rem; }
-.film-card__title { font-size: clamp(1.05rem, 1rem+.4vw, 1.3rem); font-weight: 650; letter-spacing:-.01em; }
-.film-card__year { font-family: var(--font-mono); font-size:.82rem; color: var(--ink-dim); }
 .film-card__meta { color: var(--ink-dim); font-size:.78rem; margin-top:.25rem; }
 .film-card__chips { display:flex; gap:.35rem; margin-top:.6rem; flex-wrap: wrap; }
 .film-card__logline {

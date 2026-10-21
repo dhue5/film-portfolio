@@ -121,10 +121,6 @@ function filmCardHTML(f, i) {
         ${still}
       </span>
       <span class="film-card__body">
-        <span class="film-card__row">
-          <span class="film-card__title">${esc(f.title)}</span>
-          <span class="film-card__year">${f.year}</span>
-        </span>
         <span class="film-card__meta">${esc(f.duration)} · ${esc(f.role)}</span>
         <span class="film-card__chips">${chips}</span>
         <span class="film-card__logline">${esc(f.logline)}</span>
