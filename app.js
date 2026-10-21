@@ -34,25 +34,26 @@ const SITE = {
   ],
 };
 
-/* ---------- 电影库（可编辑；poster 留空则自动生成渐变海报） ---------- */
+/* ---------- 电影库（可编辑；暂空，添加影片后自动展示） ---------- */
 const FILMS = [
-  {
-    id: 'nightfall',
-    title: '入夜之前',
-    titleEn: 'Before Nightfall',
-    year: '2023',
-    duration: '15′',
-    role: '导演 / 摄影',
-    genres: ['剧情', '纪录'],
-    logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
-    synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
-    cast: ['老周', '小雨'],
-    awards: ['FIRST 青年影展 · 最佳摄影提名'],
-    festivals: ['FIRST 青年电影展', '北京国际短片联展'],
-    poster: './assets/img/film-03.png',
-    still: '',
-    videoUrl: '#',
-  },
+  // 示例（取消注释即显示，poster 留空则自动生成渐变海报）：
+  // {
+  //   id: 'nightfall',
+  //   title: '入夜之前',
+  //   titleEn: 'Before Nightfall',
+  //   year: '2023',
+  //   duration: '15′',
+  //   role: '导演 / 摄影',
+  //   genres: ['剧情', '纪录'],
+  //   logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
+  //   synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
+  //   cast: ['老周', '小雨'],
+  //   awards: ['FIRST 青年影展 · 最佳摄影提名'],
+  //   festivals: ['FIRST 青年电影展', '北京国际短片联展'],
+  //   poster: './assets/img/film-03.png',
+  //   still: '',
+  //   videoUrl: '#',
+  // },
 ];
 
 /* ============================================================
