@@ -274,12 +274,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .card:hover .glare { opacity: 1; }
 
-.chip {
-  font-size: .72rem; padding: .22rem .6rem; border-radius: 999px;
-  border: 1px solid var(--glass-border-hi);
-  background: var(--glass-hi); color: var(--ink-dim);
-}
-
 /* ---------- 作品网格 ---------- */
 .work-grid { margin-top: 1rem; }
 .film-card {
@@ -310,13 +304,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .card:hover .film-card__poster { transform: scale(1.06); filter: saturate(1.06); }
 .film-card__still { position:absolute; inset:0; opacity:0; transition: opacity .35s ease; }
 .card:hover .film-card__still { opacity:1; }
-.film-card__body { padding: .9rem .2rem .2rem; }
-.film-card__meta { color: var(--ink-dim); font-size:.78rem; margin-top:.25rem; }
-.film-card__chips { display:flex; gap:.35rem; margin-top:.6rem; flex-wrap: wrap; }
-.film-card__logline {
-  color: var(--ink-faint); font-size:.86rem; line-height:1.5; margin-top:.6rem;
-  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
 
 /* ---------- 关于：导演介绍（标题 + 导演肖像） ---------- */
 .about-media-wrap { max-width: 64rem; margin-inline:auto; }
@@ -391,9 +378,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   transition: transform .3s var(--ease-out), background .3s;
 }
 .dialog-close:hover { transform: rotate(90deg); background: rgba(255,61,129,.25); }
-.dialog-grid {
-  display: grid; grid-template-columns: minmax(220px, 5fr) 7fr;
-}
 .dialog-poster {
   position: relative; align-self: start;
 }
@@ -402,35 +386,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   position:absolute; inset:0;
   background: linear-gradient(to top right, rgba(5,6,10,.65), transparent 60%);
 }
-.dialog-body { padding: clamp(1.4rem, 3vw, 2.5rem); }
-.dialog-eyebrow { font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:.6rem; }
-.dialog-title { font-size: clamp(1.5rem, 1.3rem + 1vw, 2.2rem); font-weight:700; letter-spacing:-.02em; }
-.dialog-title--en { display:block; font-size:.5em; color:var(--ink-faint); letter-spacing:.1em; font-weight:500; }
-.dialog-meta {
-  display:flex; flex-wrap:wrap; gap:.5rem 1.2rem; margin-top:1rem;
-  font-family: var(--font-mono); font-size:.8rem; color:var(--ink-dim);
-}
-.dialog-synopsis { margin-top:1.2rem; line-height:1.75; color:var(--ink-dim); font-size:.95rem; }
-.dialog-synopsis strong { color:var(--ink); font-weight:650; }
-.dialog-cast { margin-top:1.2rem; display:flex; flex-wrap:wrap; gap:.4rem; }
-.dialog-cast span {
-  font-size:.75rem; padding:.3rem .7rem; border-radius:999px;
-  border:1px solid var(--glass-border-hi); background: var(--glass-hi); color:var(--ink-dim);
-}
-.dialog-facts { margin-top:1.4rem; display:grid; gap:.7rem; }
-.fact-row { display:flex; gap:.8rem; font-size:.85rem; }
-.fact-row .fact-label { flex:none; width:5.2rem; color:var(--ink-faint); font-family:var(--font-mono); font-size:.75rem; padding-top:.15rem; }
-.fact-row .fact-value { color: var(--ink-dim); flex:1; }
-.fact-row .fact-value li { list-style:none; padding:.2rem 0; display:flex; align-items:center; gap:.5rem; }
-.fact-row .fact-value li::before { content:""; width:5px;height:5px;border-radius:50%; background:var(--aur-cyan); flex:none; }
-.dialog-watch {
-  margin-top:1.6rem; display:inline-flex; align-items:center; gap:.5rem;
-  padding: .8rem 1.5rem; border-radius:14px; font-weight:650;
-  background: linear-gradient(120deg, #7de8ff, var(--aur-emerald)); color:#0a0d12;
-  box-shadow: 0 0 22px rgba(0,217,255,.4);
-  transition: transform .3s var(--ease-out), box-shadow .3s;
-}
-.dialog-watch:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 0 34px rgba(0,217,255,.7); }
 
 /* ---------- 进场动画 ---------- */
 /* 滚动揭示（IO 驱动，once） */
@@ -446,7 +401,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 @media (max-width: 48rem) {
   .bento { grid-template-columns: repeat(2, 1fr); }
   .card, .film-card, .film-card--wide { grid-column: span 2; grid-row: span 1; }
-  .dialog-grid { grid-template-columns: 1fr; }
   .nav__links a:nth-child(n+4) { display:none; }
   .section { padding: 2.75rem 1rem; }
 }

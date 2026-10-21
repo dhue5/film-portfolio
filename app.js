@@ -108,7 +108,6 @@ function filmCardHTML(f, i) {
   // 布局：横版海报卡均等宽并排（各 span 6）
   const span = 'film-card--wide';
   const img = f.poster ? resolve(f.poster) : genPoster(f);
-  const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
   const still = f.still
     ? `<img class="film-card__still" src="${resolve(f.still)}" alt="" loading="lazy" decoding="async" aria-hidden="true">`
     : '';
@@ -116,14 +115,8 @@ function filmCardHTML(f, i) {
     <button class="card glass film-card ${span}" data-tilt data-reveal data-film="${f.id}"
             aria-label="打开《${esc(f.title)}》详情" style="transition-delay:${Math.min(i * 70, 280)}ms">
       <span class="film-card__media">
-        <img class="film-card__poster" src="${img}" alt="《${esc(f.title)}》海报（${f.year}）"
-             loading="lazy" decoding="async">
+        <img class="film-card__poster" src="${img}" alt="《${esc(f.title)}》海报" loading="lazy" decoding="async">
         ${still}
-      </span>
-      <span class="film-card__body">
-        <span class="film-card__meta">${esc(f.duration)} · ${esc(f.role)}</span>
-        <span class="film-card__chips">${chips}</span>
-        <span class="film-card__logline">${esc(f.logline)}</span>
       </span>
       <span class="sheen" aria-hidden="true"></span>
       <span class="glare" aria-hidden="true"></span>
@@ -257,8 +250,8 @@ const Dialog = (() => {
         });
         dlg.style.transform = 'none';
       }
-      const t = $('#dialog-title');
-      if (t) t.focus({ preventScroll: true });
+      const cb = $('.dialog-close');
+      if (cb) cb.focus({ preventScroll: true });
     }, 20);
   }
 
@@ -280,34 +273,11 @@ const Dialog = (() => {
 
   function buildInner(f) {
     const poster = f.poster ? resolve(f.poster) : genPoster(f);
-    const meta = `${f.year} · ${esc(f.duration)} · ${esc(f.role)}`;
-    const cast = f.cast.length ? `<div class="dialog-cast">${f.cast.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : '';
-    const festivals = (f.festivals || []).map(a => `<li>${esc(a)}</li>`).join('');
-    const watch = (f.videoUrl && f.videoUrl !== '#')
-      ? `<a class="dialog-watch" href="${esc(f.videoUrl)}" target="_blank" rel="noopener">▶ 在线观看</a>`
-      : `<button class="dialog-watch" disabled style="opacity:.35;cursor:not-allowed;">▶ 预告片筹备中</button>`;
     return `
       <button class="dialog-close" aria-label="关闭详情">✕</button>
-      <div class="dialog-grid">
-        <div class="dialog-poster">
-          <img src="${poster}" alt="《${esc(f.title)}》海报" loading="eager" decoding="async">
-          <div class="dialog-poster__scrim"></div>
-        </div>
-        <div class="dialog-body">
-          <p class="dialog-eyebrow">${esc(f.titleEn.toUpperCase())} · SHORT FILM</p>
-          <h3 class="dialog-title" id="dialog-title" tabindex="-1">${esc(f.title)}
-            <span class="dialog-title--en">${esc(f.titleEn)}</span>
-          </h3>
-          <p class="dialog-meta">${meta}</p>
-          <div class="film-card__chips">${f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('')}</div>
-          <p class="dialog-synopsis">${esc(f.synopsis)}</p>
-          ${cast}
-          <div class="dialog-facts">
-            <div class="fact-row"><span class="fact-label">影展</span>
-              <ul class="fact-value">${festivals || '<li>即将公布</li>'}</ul></div>
-          </div>
-          ${watch}
-        </div>
+      <div class="dialog-poster">
+        <img src="${poster}" alt="《${esc(f.title)}》海报" loading="eager" decoding="async">
+        <div class="dialog-poster__scrim"></div>
       </div>`;
   }
 
