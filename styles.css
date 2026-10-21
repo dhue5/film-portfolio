@@ -16,7 +16,6 @@
   --aur-cyan: rgba(0, 217, 255, 0.80);
   --aur-amethyst: rgba(122, 92, 255, 0.85);
   --aur-magenta: rgba(255, 61, 129, 0.80);
-  --gold: #ffc94d;
 
   /* 图表系列色（已过 dataviz 校验：明度带/HSV 分离/正常视觉 ΔE≥15） */
   --series-1: #0caa72;  /* Emerald   剧情 */
@@ -321,14 +320,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   color: var(--ink-faint); font-size:.86rem; line-height:1.5; margin-top:.6rem;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
-.film-card__award {
-  display:inline-flex; align-items:center; gap:.35rem; margin-top:.6rem;
-  font-size:.72rem; color: var(--gold); letter-spacing:.05em;
-}
-.film-card__award::before {
-  content:""; width:7px; height:7px; border-radius:50%;
-  background: var(--gold); box-shadow: 0 0 10px rgba(255,201,77,.8);
-}
 
 /* ---------- 关于：导演介绍（标题 + 导演肖像） ---------- */
 .about-media-wrap { max-width: 64rem; margin-inline:auto; }
@@ -435,7 +426,6 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .fact-row .fact-value { color: var(--ink-dim); flex:1; }
 .fact-row .fact-value li { list-style:none; padding:.2rem 0; display:flex; align-items:center; gap:.5rem; }
 .fact-row .fact-value li::before { content:""; width:5px;height:5px;border-radius:50%; background:var(--aur-cyan); flex:none; }
-.dialog-award { color: var(--gold); font-weight:600; }
 .dialog-watch {
   margin-top:1.6rem; display:inline-flex; align-items:center; gap:.5rem;
   padding: .8rem 1.5rem; border-radius:14px; font-weight:650;

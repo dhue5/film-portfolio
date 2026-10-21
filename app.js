@@ -47,7 +47,6 @@ const FILMS = [
     logline: '南纬七十度的极夜里，一段跨语言的电波之恋。',
     synopsis: '在南极科考站的最后一夜，气象员收到一段来自四十年前的无线电波，内容竟是与当下同步的对话。当极光在天空展开，两个时代的人在频道里相遇——关于距离、时间，与从未寄出的告白。',
     cast: ['周屿', '艾拉', '陈默'],
-    awards: ['克莱蒙费朗短片节 · 评审团特别奖'],
     festivals: ['克莱蒙费朗国际短片节', '上海国际电影节短片单元'],
     poster: './assets/img/film-02.png',
     still: '',
@@ -64,7 +63,6 @@ const FILMS = [
     logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
     synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
     cast: ['老周', '小雨'],
-    awards: ['FIRST 青年影展 · 最佳摄影提名'],
     festivals: ['FIRST 青年电影展', '北京国际短片联展'],
     poster: './assets/img/film-03.png',
     still: '',
@@ -111,8 +109,6 @@ function filmCardHTML(f, i) {
   const span = 'film-card--wide';
   const img = f.poster ? resolve(f.poster) : genPoster(f);
   const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
-  const award = (f.awards && f.awards.length)
-    ? `<span class="film-card__award">${esc(f.awards[0].split('·')[0].trim())}</span>` : '';
   const still = f.still
     ? `<img class="film-card__still" src="${resolve(f.still)}" alt="" loading="lazy" decoding="async" aria-hidden="true">`
     : '';
@@ -132,7 +128,6 @@ function filmCardHTML(f, i) {
         <span class="film-card__meta">${esc(f.duration)} · ${esc(f.role)}</span>
         <span class="film-card__chips">${chips}</span>
         <span class="film-card__logline">${esc(f.logline)}</span>
-        ${award}
       </span>
       <span class="sheen" aria-hidden="true"></span>
       <span class="glare" aria-hidden="true"></span>
@@ -291,7 +286,6 @@ const Dialog = (() => {
     const poster = f.poster ? resolve(f.poster) : genPoster(f);
     const meta = `${f.year} · ${esc(f.duration)} · ${esc(f.role)}`;
     const cast = f.cast.length ? `<div class="dialog-cast">${f.cast.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : '';
-    const awards = (f.awards || []).map(a => `<li class="dialog-award">★ ${esc(a)}</li>`).join('');
     const festivals = (f.festivals || []).map(a => `<li>${esc(a)}</li>`).join('');
     const watch = (f.videoUrl && f.videoUrl !== '#')
       ? `<a class="dialog-watch" href="${esc(f.videoUrl)}" target="_blank" rel="noopener">▶ 在线观看</a>`
@@ -315,8 +309,6 @@ const Dialog = (() => {
           <div class="dialog-facts">
             <div class="fact-row"><span class="fact-label">影展</span>
               <ul class="fact-value">${festivals || '<li>即将公布</li>'}</ul></div>
-            <div class="fact-row"><span class="fact-label">获奖</span>
-              <ul class="fact-value">${awards || '<li>—</li>'}</ul></div>
           </div>
           ${watch}
         </div>
