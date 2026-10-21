@@ -4,6 +4,9 @@ _ref/
 # local preview logs
 serve*.log
 
+# stray capture files
+$OUTFILE
+
 # OS junk
 Thumbs.db
 Desktop.ini
