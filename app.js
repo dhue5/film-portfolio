@@ -16,19 +16,19 @@ const resolve = (p) => BASE.href.replace(/\/$/, '') + '/' + p.replace(/^\.?\//, 
 
 /* ---------- 站点信息（可编辑） ---------- */
 const SITE = {
-  name: '林深',
-  nameEn: 'LIN SHEN',
+  name: '王歌词',
+  nameEn: 'WANG GECI',
   role: '导演 / 编剧 / 剪辑',
   tagline: '用镜头捕捉光与时间，讲述属于我们时代的故事。',
   bio: [
-    `你好，我是<strong>林深</strong>，一名专注短片的独立电影人。2016 年起投身独立影像创作，作品先后入围国内外十余个短片电影节，以<strong>「时间 × 情绪」</strong>为母题，在有限片长里完成一次完整的情绪转弯。`,
+    `你好，我是<strong>王歌词</strong>，一名专注短片的独立电影人。2016 年起投身独立影像创作，作品先后入围国内外十余个短片电影节，以<strong>「时间 × 情绪」</strong>为母题，在有限片长里完成一次完整的情绪转弯。`,
     `我偏爱把「消失」拍成可见的东西——消失的方言、消失的街区、消逝前最后一通无线电。每部短片都是一次瞄准：对准一个念头、一个人、一段从未被说出的日常。海报即入口，欢迎进入我的片库。`,
   ],
   tags: ['剧情短片', '纪录片', '科幻实验', '胶片刻录', '跨媒介影像'],
   // 个人视觉（自我介绍图 = film-01.png）
-  introAlt: '林深——个人视觉肖像',
-  email: 'lin.shen@example.com',
-  emailLabel: 'lin.shen@example.com',
+  introAlt: '王歌词——个人视觉肖像',
+  email: 'wanggeci@example.com',
+  emailLabel: 'wanggeci@example.com',
   socials: [
     { label: 'Vimeo',  icon: '◉', url: '#' },
     { label: 'Instagram', icon: '◎', url: '#' },
