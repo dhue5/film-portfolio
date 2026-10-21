@@ -34,26 +34,42 @@ const SITE = {
   ],
 };
 
-/* ---------- 电影库（可编辑；暂空，添加影片后自动展示） ---------- */
+/* ---------- 电影库（可编辑；poster 留空则自动生成渐变海报） ---------- */
 const FILMS = [
-  // 示例（取消注释即显示，poster 留空则自动生成渐变海报）：
-  // {
-  //   id: 'nightfall',
-  //   title: '入夜之前',
-  //   titleEn: 'Before Nightfall',
-  //   year: '2023',
-  //   duration: '15′',
-  //   role: '导演 / 摄影',
-  //   genres: ['剧情', '纪录'],
-  //   logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
-  //   synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
-  //   cast: ['老周', '小雨'],
-  //   awards: ['FIRST 青年影展 · 最佳摄影提名'],
-  //   festivals: ['FIRST 青年电影展', '北京国际短片联展'],
-  //   poster: './assets/img/film-03.png',
-  //   still: '',
-  //   videoUrl: '#',
-  // },
+  {
+    id: 'aurora',
+    title: '极光之下',
+    titleEn: 'Under the Aurora',
+    year: '2024',
+    duration: '12′',
+    role: '导演 / 编剧',
+    genres: ['剧情', '科幻'],
+    logline: '南纬七十度的极夜里，一段跨语言的电波之恋。',
+    synopsis: '在南极科考站的最后一夜，气象员收到一段来自四十年前的无线电波，内容竟是与当下同步的对话。当极光在天空展开，两个时代的人在频道里相遇——关于距离、时间，与从未寄出的告白。',
+    cast: ['周屿', '艾拉', '陈默'],
+    awards: ['克莱蒙费朗短片节 · 评审团特别奖'],
+    festivals: ['克莱蒙费朗国际短片节', '上海国际电影节短片单元'],
+    poster: './assets/img/film-02.png',
+    still: '',
+    videoUrl: '#',
+  },
+  {
+    id: 'nightfall',
+    title: '入夜之前',
+    titleEn: 'Before Nightfall',
+    year: '2023',
+    duration: '15′',
+    role: '导演 / 摄影',
+    genres: ['剧情', '纪录'],
+    logline: '末班渡轮上的守夜人，最后一次巡视城市的水岸。',
+    synopsis: '一条航运停摆前夕的渡轮，一位即将退休的守夜人，以及渡轮上最后七天的城市倒影。胶片质感记录下霓虹消退、人声渐远的物理之熵。',
+    cast: ['老周', '小雨'],
+    awards: ['FIRST 青年影展 · 最佳摄影提名'],
+    festivals: ['FIRST 青年电影展', '北京国际短片联展'],
+    poster: './assets/img/film-03.png',
+    still: '',
+    videoUrl: '#',
+  },
 ];
 
 /* ============================================================
