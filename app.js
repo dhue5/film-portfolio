@@ -10,7 +10,7 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const COARSE = window.matchMedia('(pointer: coarse)').matches;
 const DIALOG_NATIVE = typeof HTMLDialogElement !== 'undefined';
 
-/* GitHub Pages 项目页运行于子路径（/film-portfolio/）：资源一律相对解析 */
+/* GitHub Pages 项目页运行于子路径（/portfolio/）：资源一律相对解析 */
 const BASE = new URL('./', document.baseURI);
 const resolve = (p) => BASE.href.replace(/\/$/, '') + '/' + p.replace(/^\.?\//, '');
 
