@@ -18,8 +18,6 @@ const resolve = (p) => BASE.href.replace(/\/$/, '') + '/' + p.replace(/^\.?\//, 
 const SITE = {
   name: '王歌词',
   nameEn: 'WANG GECI',
-  role: '导演 / 编剧 / 剪辑',
-  tagline: '用镜头捕捉光与时间，讲述属于我们时代的故事。',
   bio: [
     `你好，我是<strong>王歌词</strong>，一名专注短片的独立电影人。2016 年起投身独立影像创作，作品先后入围国内外十余个短片电影节，以<strong>「时间 × 情绪」</strong>为母题，在有限片长里完成一次完整的情绪转弯。`,
     `我偏爱把「消失」拍成可见的东西——消失的方言、消失的街区、消逝前最后一通无线电。每部短片都是一次瞄准：对准一个念头、一个人、一段从未被说出的日常。海报即入口，欢迎进入我的片库。`,
@@ -38,24 +36,6 @@ const SITE = {
 
 /* ---------- 电影库（可编辑；poster 留空则自动生成渐变海报） ---------- */
 const FILMS = [
-  {
-    id: 'aurora',
-    title: '极光之下',
-    titleEn: 'Under the Aurora',
-    year: '2024',
-    duration: '12′',
-    role: '导演 / 编剧',
-    genres: ['剧情', '科幻'],
-    logline: '南纬七十度的极夜里，一段跨语言的电波之恋。',
-    synopsis: '在南极科考站的最后一夜，气象员收到一段来自四十年前的无线电波，内容竟是与当下同步的对话。当极光在天空展开，两个时代的人在频道里相遇——关于距离、时间，与从未寄出的告白。',
-    cast: ['周屿', '艾拉', '陈默'],
-    awards: ['克莱蒙费朗短片节 · 评审团特别奖'],
-    festivals: ['克莱蒙费朗国际短片节', '上海国际电影节短片单元'],
-    poster: './assets/img/film-02.png',
-    still: '',  // 留空：hover 复用自身海报
-    videoUrl: '#',
-    featured: true,
-  },
   {
     id: 'nightfall',
     title: '入夜之前',
@@ -107,30 +87,6 @@ function genPoster(f, w = 600, h = 900) {
 }
 
 /* ============================================================
-   渲染：主打短片（hero 右侧）
-   ============================================================ */
-function renderFeatured() {
-  const f = FILMS.find(x => x.featured) || FILMS[0];
-  const slot = $('#featured-slot');
-  const img = f.poster ? resolve(f.poster) : genPoster(f);
-  const badges = (f.awards && f.awards.length)
-    ? `<span class="featured__badge">★ ${esc(f.awards[0].split('·')[0].trim())}</span>` : '';
-  const chips = f.genres.map(g => `<span class="chip">${esc(g)}</span>`).join('');
-  slot.innerHTML = `
-    <div class="featured__media">
-      <img src="${img}" alt="主打短片《${esc(f.title)}》海报" loading="eager" decoding="async">
-      <div class="featured__scrim">
-        <span class="featured__title">${esc(f.title)}</span>
-        <span class="featured__meta">${f.year} · ${esc(f.duration)} · ${esc(f.role)}</span>
-        <span class="featured__chips">${chips}</span>
-      </div>
-    </div>
-    ${badges}
-    <span class="sheen" aria-hidden="true"></span>
-    <span class="glare" aria-hidden="true"></span>`;
-}
-
-/* ============================================================
    渲染：电影卡（海报 + 元数据）
    ============================================================ */
 function filmCardHTML(f, i) {
@@ -168,7 +124,7 @@ function filmCardHTML(f, i) {
 
 function renderFilms() {
   const grid = $('#work-grid');
-  // 两部短片海报全部展示（hero 主打卡另展示主打一部）
+  // 所有短片海报全部展示
   grid.innerHTML = FILMS.map((f, i) => filmCardHTML(f, i)).join('');
 }
 
@@ -375,7 +331,6 @@ const Dialog = (() => {
 function init() {
   $('#year').textContent = new Date().getFullYear();
 
-  renderFeatured();
   renderFilms();
   renderContact();
 
