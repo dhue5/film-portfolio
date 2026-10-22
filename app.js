@@ -25,8 +25,8 @@ const SITE = {
   tags: ['剧情短片', '纪录片', '科幻实验', '胶片刻录', '跨媒介影像'],
   // 个人视觉（自我介绍图 = film-01.png）
   introAlt: '王歌词——个人视觉肖像',
-  email: 'wanggeci@example.com',
-  emailLabel: 'wanggeci@example.com',
+  email: 'vigourfilm@163.com',
+  emailLabel: 'vigourfilm@163.com',
   socials: [
     { label: 'Vimeo',  icon: '◉', url: '#' },
     { label: 'Instagram', icon: '◎', url: '#' },
