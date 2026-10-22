@@ -304,6 +304,18 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .card:hover .film-card__poster { transform: scale(1.06); filter: saturate(1.06); }
 .film-card__still { position:absolute; inset:0; opacity:0; transition: opacity .35s ease; }
 .card:hover .film-card__still { opacity:1; }
+.film-card__hover-title {
+  position: absolute; left: .9rem; bottom: .9rem; z-index: 2;
+  font-size: clamp(.8rem, .75rem + .3vw, .95rem); letter-spacing: .06em;
+  color: var(--ink-hi); padding: .3rem .7rem;
+  border: 1px solid var(--glass-border-hi);
+  background: rgba(5,6,10,.55); backdrop-filter: blur(10px);
+  border-radius: 999px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .3s var(--ease-out), transform .3s var(--ease-out);
+  pointer-events: none;
+}
+.card:hover .film-card__hover-title { opacity: 1; transform: none; }
 
 /* ---------- 关于：导演介绍（标题 + 导演肖像） ---------- */
 .about-media-wrap { max-width: 64rem; margin-inline:auto; }
@@ -378,6 +390,18 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
   transition: transform .3s var(--ease-out), background .3s;
 }
 .dialog-close:hover { transform: rotate(90deg); background: rgba(255,61,129,.25); }
+.dialog-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+  width: 2.9rem; height: 2.9rem; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--glass-border-hi);
+  background: rgba(5,6,10,.55); color: var(--ink);
+  font-size: 1.25rem; line-height: 1;
+  transition: transform .3s var(--ease-out), background .3s, color .3s;
+}
+.dialog-nav:hover { transform: translateY(-50%) scale(1.08); background: rgba(255,61,129,.25); color: var(--ink-hi); }
+.dialog-nav--prev { left: 1rem; }
+.dialog-nav--next { right: 1rem; }
 .dialog-poster {
   position: relative; align-self: start;
 }

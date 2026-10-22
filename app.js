@@ -27,11 +27,6 @@ const SITE = {
   introAlt: '王歌词——个人视觉肖像',
   email: 'vigourfilm@163.com',
   emailLabel: 'vigourfilm@163.com',
-  socials: [
-    { label: 'Vimeo',  icon: '◉', url: '#' },
-    { label: 'Instagram', icon: '◎', url: '#' },
-    { label: '哔哩哔哩', icon: '▣', url: '#' },
-  ],
 };
 
 /* ---------- 电影库（可编辑；poster 留空则自动生成渐变海报） ---------- */
@@ -113,10 +108,11 @@ function filmCardHTML(f, i) {
     : '';
   return `
     <button class="card glass film-card ${span}" data-tilt data-reveal data-film="${f.id}"
-            aria-label="打开《${esc(f.title)}》详情" style="transition-delay:${Math.min(i * 70, 280)}ms">
+            aria-label="查看《${esc(f.title)}》海报大图" style="transition-delay:${Math.min(i * 70, 280)}ms">
       <span class="film-card__media">
         <img class="film-card__poster" src="${img}" alt="《${esc(f.title)}》海报" loading="lazy" decoding="async">
         ${still}
+        <span class="film-card__hover-title" aria-hidden="true">${esc(f.title)}</span>
       </span>
       <span class="sheen" aria-hidden="true"></span>
       <span class="glare" aria-hidden="true"></span>
@@ -135,15 +131,10 @@ function renderFilms() {
 
 function renderContact() {
   const slot = $('#contact-slot');
-  const socials = SITE.socials.map(s =>
-    `<a class="social-btn" href="${esc(s.url)}" rel="noopener" aria-label="${esc(s.label)}">
-       <span aria-hidden="true">${s.icon}</span> ${esc(s.label)}
-     </a>`).join('');
   slot.innerHTML = `
     <a class="social-btn social-btn--primary" href="mailto:${esc(SITE.email)}" aria-label="给我发邮件">
       ✉ ${esc(SITE.emailLabel)}
-    </a>
-    ${socials}`;
+    </a>`;
 }
 
 /* ============================================================
@@ -227,10 +218,26 @@ const Dialog = (() => {
   const dlg = $('#film-dialog');
   let openCard = null;
   let closing = false;
+  let cur = 0; /* 当前展示的第几张海报 */
+
+  function render() {
+    const f = FILMS[cur];
+    dlg.innerHTML = buildInner(f);
+    const cb = $('.dialog-close');
+    if (cb) cb.focus({ preventScroll: true });
+  }
+
+  function show(dir) {
+    if (closing || !dlg.open) return;
+    cur = (cur + dir + FILMS.length) % FILMS.length;
+    render();
+  }
 
   function open(id) {
-    const f = FILMS.find(x => x.id === id);
-    if (!f || DIALOG_NATIVE === false) return;
+    const idx = FILMS.findIndex(x => x.id === id);
+    if (idx === -1 || DIALOG_NATIVE === false) return;
+    cur = idx;
+    const f = FILMS[idx];
     openCard = $(`[data-film="${id}"]`);
     dlg.innerHTML = buildInner(f);
     if (!dlg.open) dlg.showModal();
@@ -273,8 +280,12 @@ const Dialog = (() => {
 
   function buildInner(f) {
     const poster = f.poster ? resolve(f.poster) : genPoster(f);
+    const multi = FILMS.length > 1;
     return `
       <button class="dialog-close" aria-label="关闭详情">✕</button>
+      ${multi ? `
+      <button class="dialog-nav dialog-nav--prev" aria-label="上一张海报">‹</button>
+      <button class="dialog-nav dialog-nav--next" aria-label="下一张海报">›</button>` : ''}
       <div class="dialog-poster">
         <img src="${poster}" alt="《${esc(f.title)}》海报" loading="eager" decoding="async">
         <div class="dialog-poster__scrim"></div>
@@ -289,15 +300,23 @@ const Dialog = (() => {
       if (card) open(card.dataset.film);
     });
     dlg.addEventListener('click', (e) => {
-      if (e.target.closest('.dialog-close')) close();
+      if (e.target.closest('.dialog-nav--prev')) show(-1);
+      else if (e.target.closest('.dialog-nav--next')) show(1);
+      else if (e.target.closest('.dialog-close')) close();
     });
     // 点击 backdrop 关闭
     dlg.addEventListener('click', (e) => {
       if (e.target === dlg) close();
     });
+    // 键盘 ← → 切换海报
+    dlg.addEventListener('keydown', (e) => {
+      if (!dlg.open) return;
+      if (e.key === 'ArrowLeft') show(-1);
+      else if (e.key === 'ArrowRight') show(1);
+    });
   }
 
-  return { init, open, close };
+  return { init, open, close, show };
 })();
 
 /* ============================================================
